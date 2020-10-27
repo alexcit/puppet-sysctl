@@ -90,8 +90,9 @@ define sysctl (
       $qvalue = shellquote("${value}")
       # lint:endignore
       exec { "enforce-sysctl-value-${qtitle}":
-          unless  => "/usr/bin/test \"$(/sbin/sysctl -n ${qtitle}|/usr/bin/tr '\t' ' ')\" = ${qvalue}",
-          command => "/sbin/sysctl -w ${qtitle}=${qvalue}",
+          unless  => "test \"$(sysctl -n ${qtitle}|tr '\t' ' ')\" = ${qvalue}",
+          command => "sysctl -w ${qtitle}=${qvalue}",
+          path    => [ '/usr/sbin', '/sbin', '/usr/bin', '/bin' ],
       }
     }
 
