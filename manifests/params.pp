@@ -2,7 +2,10 @@ class sysctl::params {
 
   # Keep the original symlink if we purge, to avoid ping-pong with initscripts
   case "${facts['osfamily']}-${facts['operatingsystemmajrelease']}" {
-    'RedHat-7','RedHat-8','Debian-8': {
+    'RedHat-7',
+    'RedHat-8',
+    'Debian-8',
+    'Suse-12': {
       $symlink99 = true
     }
     default: {
